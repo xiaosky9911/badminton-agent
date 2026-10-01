@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  macOS launchd 配置：开机自启 + 崩溃自动重启，后台长期运行。
+  安装:
+    1. 把下面所有 /Users/YOUR_NAME/badminton-agent 换成你的实际路径
+    2. cp scripts/com.badminton.agent.plist ~/Library/LaunchAgents/
+    3. launchctl load  ~/Library/LaunchAgents/com.badminton.agent.plist
+    4. launchctl start com.badminton.agent
+  卸载:
+       launchctl unload ~/Library/LaunchAgents/com.badminton.agent.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.badminton.agent</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/YOUR_NAME/badminton-agent/run.sh</string>
+        <string>loop</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_NAME/badminton-agent</string>
+
+    <!-- 开机 / 登录即启动 -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- 崩溃或退出后自动拉起(异常退出后依靠 SQLite 状态恢复，不会把旧场地误判为新) -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- 重启最小间隔，避免疯狂重启 -->
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/YOUR_NAME/badminton-agent/data/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/YOUR_NAME/badminton-agent/data/launchd.err.log</string>
+</dict>
+</plist>

@@ -1,0 +1,10 @@
+google-api-python-client>=2.100.0
+google-auth>=2.23.0
+google-auth-httplib2>=0.1.1
+python-dotenv>=1.0.0
+
+# Windows 上 zoneinfo 没有系统时区库，必须装这个（macOS/Linux 装了也无害）
+tzdata>=2024.1
+
+# dev / tests
+pytest>=7.4.0
